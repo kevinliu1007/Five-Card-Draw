@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Created by kevinliu1007 on 9/8/17.
  */
 
-public class Project1 {
+public class FiveCardDraw {
 
     public static void main(String[] argv) {
         boolean cont = true;
