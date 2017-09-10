@@ -42,11 +42,13 @@ public class Game {
         int numOpponents = 0;
         boolean doneReading = false;
 
+        /* Reading user input */
         while(!doneReading) {
             System.out.print("Please enter number of opponents you want to play against: ");
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
 
+            /* Find number of opponent user want */
             try {
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
                 String line = buffer.readLine();
                 Scanner scanner = new Scanner(line);
 
@@ -71,6 +73,7 @@ public class Game {
             }
         }
 
+        /* Create opponent players */
         for (int i = 0; i < numOpponents; ++i) {
             opponentPlayers.add(new OpponentPlayer());
         }
@@ -99,19 +102,23 @@ public class Game {
         ArrayList<Integer> discardOptions = new ArrayList<>();
         boolean hasAce = false, discardSuccess = false;
 
+        /* Display hands of the players */
         System.out.print("The cards in your hands are: ");
         userPlayer.displayCards();
 
+        /* Find if hand contains Ace */
         if (userPlayer.findAce()) {
             hasAce = true;
             System.out.println("Since you have an Ace you can keep the Ace and discard the other four cards.");
         }
 
+        /* Discard cards from hand */
         while (!discardSuccess) {
             System.out.print("List the cards numbers you wish to discard. > ");
             BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
             int discardCounter = 0;
 
+            /* Read user input */
             try {
                 String line = buffer.readLine();
                 Scanner scanner = new Scanner(line);
@@ -128,6 +135,7 @@ public class Game {
                 System.out.println(e);
             }
 
+            /* Check for input error */
             if (discardCounter > 4) {
                 System.out.println("Cannot select more than 3 cards to discard!");
             } else if (!hasAce && discardCounter > 3) {
@@ -157,9 +165,11 @@ public class Game {
         ArrayList<Integer> computerPlayers = new ArrayList<>();
         boolean tie = false;
 
+        /* Display user's hand */
         System.out.print("\nYour hand: ");
         userPlayer.displayCards();
 
+        /* Evaluate AIs' hands and display their hands*/
         for (OpponentPlayer op : opponentPlayers) {
             computerPlayers.add(op.evaluateHand());
             System.out.print("AI Player " + player + ": ");
@@ -167,6 +177,7 @@ public class Game {
             player++;
         }
 
+        /* Check for the winner */
         bestScore = userScore;
         for (int s : computerPlayers) {
             if (s < bestScore) {
@@ -184,6 +195,7 @@ public class Game {
             AI++;
         }
 
+        /* Display the winner */
         if (winner == -1) {
             if (tie) {
                 System.out.println("You tied with Player " + tiedPlayer + " with " + winningHand(bestScore));

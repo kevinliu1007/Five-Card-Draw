@@ -59,6 +59,7 @@ public class CardPile {
         ArrayList<Card> sortedCardPile = new ArrayList<>();
         ArrayList<Card> randomedCardPile = new ArrayList<>();
 
+        /* Initialize sorted pile of cards */
         for (int i = 0; i < 4; ++i) {
             for (int j = 1; j <= 13; ++j) {
                 String suit;
@@ -77,6 +78,7 @@ public class CardPile {
         int leftOverCards = 52;
         Random rn = new Random();
 
+        /* Randomize card pile */
         while (leftOverCards > 0) {
             int index = rn.nextInt(leftOverCards );
             randomedCardPile.add(sortedCardPile.get(index));

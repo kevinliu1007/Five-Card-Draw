@@ -73,6 +73,7 @@ public class Player {
     final public void discardCards(final int numberOfCards,
                                    ArrayList<Integer> cardsDiscarded,
                                    CardPile cardPile) {
+        /* Sort the order of cards user want to discard */
         Collections.sort(cardsDiscarded, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
@@ -86,6 +87,7 @@ public class Player {
             }
         });
 
+        /* Discard the cards */
         while (!cardsDiscarded.isEmpty()) {
             cardPile.discardCard(playerCards.get(cardsDiscarded.get(cardsDiscarded.size()-1)));
             int index = cardsDiscarded.get(cardsDiscarded.size()-1);
@@ -93,6 +95,7 @@ public class Player {
             cardsDiscarded.remove(cardsDiscarded.size()-1);
         }
 
+        /* Draw new cards */
         for (int i = 0; i < numberOfCards; ++i) {
             playerCards.add(cardPile.dealtCard());
         }

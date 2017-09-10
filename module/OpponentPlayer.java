@@ -24,6 +24,7 @@ public class OpponentPlayer extends Player {
         int diffSuit = almostSameSuit();
         int diffSeq = almostStraight();
 
+        /* AI decision making */
         if (value < 8) {
             if (value == 1) {
                 fourOfAKindDiscard(cardPile);
@@ -168,6 +169,7 @@ public class OpponentPlayer extends Player {
         int c = 0, d = 0, h = 0, s = 0;
         ArrayList<Card> hand = getCards();
 
+        /* Check for four cards with the same suit */
         for (int i = 0; i < 4; ++i) {
             switch (hand.get(i).getSuit()) {
                 case "C": c++; break;
@@ -178,6 +180,7 @@ public class OpponentPlayer extends Player {
             }
         }
 
+        /* Check and return the index of the different suit */
         if (c == 4 || d == 4|| h == 4 || s == 4) {
             if (c == 1) {
                 return findDifferentSuit(hand, "C");

@@ -10,12 +10,20 @@ import java.util.Scanner;
 
 public class FiveCardDraw {
 
+    
+    /**
+     * Main method for project 1.
+     *
+     * @param argv argv
+     */
     public static void main(String[] argv) {
         boolean cont = true;
 
+        /* Main program orchestration */
         while (cont){
             Game game = new Game();
 
+            /* Phases of the game */
             game.opponentSelection();
             game.dealingPhase();
             game.discardPhase();
@@ -23,6 +31,7 @@ public class FiveCardDraw {
 
             System.out.print("\nDo you wish to play another one? (yes/no) \n");
 
+            /* Get user input to see if user want to continue */
             try {
                 boolean validInput = false;
 
