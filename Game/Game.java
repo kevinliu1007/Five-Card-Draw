@@ -153,7 +153,7 @@ public class Game {
         }
 
         for (OpponentPlayer op : opponentPlayers) {
-            op.makeDecision(cardPile);
+            //op.makeDecision(cardPile);
         }
     }
 
@@ -225,7 +225,9 @@ public class Game {
         }
 
         for (int i = 0; i < 5; ++i) {
-            if (indices[i] == 1 && userPlayer.getCards().get(i).getRawRank() == 1) {
+            if (indices[i] == 1
+                    && (userPlayer.getCards().get(i).getRawRank() == 1
+                    || userPlayer.getCards().get(i).getRawRank() == 14)) {
                 return true;
             }
         }
@@ -288,10 +290,8 @@ public class Game {
      * @return  true if opponentPlayer win, false else wise
      */
     private boolean straightDecider(UserPlayer userPlayer, OpponentPlayer opponentPlayer, boolean tie) {
-        if (userPlayer.getCards().get(0).getRawRank() == 1) {
-            return false;
-        } else if (userPlayer.getCards().get(0).getRawRank() < opponentPlayer.getCards().get(0).getRawRank()) {
-            return true;
+        if (userPlayer.getCards().get(0).getRawRank() != opponentPlayer.getCards().get(0).getRawRank()) {
+            return userPlayer.getCards().get(0).getRawRank() < opponentPlayer.getCards().get(0).getRawRank();
         } else {
             tie = true;
             return false;
@@ -311,18 +311,10 @@ public class Game {
         int userIndex = userPlayer.fourOfAKindIndex();
         int opponentIndex = opponentPlayer.fourOfAKindIndex();
 
-        if (userPlayer.getCards().get(userIndex).getRawRank() == 1 ) {
-            return false;
-        } else if (opponentPlayer.getCards().get(opponentIndex).getRawRank() == 1 ) {
-            return true;
-        } else if (userPlayer.getCards().get(userIndex).getRawRank()
+        if (userPlayer.getCards().get(userIndex).getRawRank()
                 < opponentPlayer.getCards().get(opponentIndex).getRawRank()) {
             return true;
         } else {
-            if (userPlayer.getCards().get(userIndex).getRawRank()
-                    == opponentPlayer.getCards().get(opponentIndex).getRawRank()) {
-                tie = true;
-            }
             return false;
         }
     }
@@ -341,20 +333,14 @@ public class Game {
         int opponentThreeIndex = opponentPlayer.threeOfAKindIndex();
         int opponentTwoIndex = opponentPlayer.twoOfAKindIndex();
 
-        if (userPlayer.getCards().get(userThreeIndex).getRawRank() == 1 ) {
-            return false;
-        } else if (opponentPlayer.getCards().get(opponentThreeIndex).getRawRank() == 1 ) {
-            return true;
-        } else if (userPlayer.getCards().get(userTwoIndex).getRawRank() == 1 ) {
-            return false;
-        } else if (opponentPlayer.getCards().get(opponentTwoIndex).getRawRank() == 1 ) {
-            return true;
-        } else if (userPlayer.getCards().get(userThreeIndex).getRawRank()
-                < opponentPlayer.getCards().get(opponentThreeIndex).getRawRank()) {
-            return true;
+        if (userPlayer.getCards().get(userThreeIndex).getRawRank()
+                != opponentPlayer.getCards().get(opponentThreeIndex).getRawRank()) {
+            return userPlayer.getCards().get(userThreeIndex).getRawRank()
+                    < opponentPlayer.getCards().get(opponentThreeIndex).getRawRank();
         } else if (userPlayer.getCards().get(userTwoIndex).getRawRank()
-                < opponentPlayer.getCards().get(opponentTwoIndex).getRawRank()) {
-            return true;
+                != opponentPlayer.getCards().get(opponentTwoIndex).getRawRank()) {
+            return userPlayer.getCards().get(userTwoIndex).getRawRank()
+                    < opponentPlayer.getCards().get(opponentTwoIndex).getRawRank();
         } else {
             return false;
         }
@@ -370,19 +356,13 @@ public class Game {
      * @return  true if opponentPlayer win, false else wise
      */
     private boolean flushDecider(UserPlayer userPlayer, OpponentPlayer opponentPlayer, boolean tie) {
-        if (userPlayer.getCards().get(0).getRawRank() == 1) {
-            return false;
-        } else if (opponentPlayer.getCards().get(0).getRawRank() == 1) {
-            return true;
-        } else {
-            int i = 0;
+        int i = 0;
 
-            while (i < 5) {
-                if (userPlayer.getCards().get(i).getRawRank() != opponentPlayer.getCards().get(i).getRawRank()) {
-                    return userPlayer.getCards().get(i).getRawRank() < opponentPlayer.getCards().get(i).getRawRank();
-                }
-                i++;
+        while (i < 5) {
+            if (userPlayer.getCards().get(i).getRawRank() != opponentPlayer.getCards().get(i).getRawRank()) {
+                return userPlayer.getCards().get(i).getRawRank() < opponentPlayer.getCards().get(i).getRawRank();
             }
+            i++;
         }
 
         tie = true;
@@ -398,13 +378,7 @@ public class Game {
      * @return  true if opponentPlayer win, false else wise
      */
     private boolean highCardDecider(UserPlayer userPlayer, OpponentPlayer opponentPlayer) {
-        if (userPlayer.getCards().get(0).getRawRank() == 1) {
-            return false;
-        } else if (opponentPlayer.getCards().get(0).getRawRank() == 1) {
-            return true;
-        } else {
-            return userPlayer.getCards().get(0).getRawRank() < opponentPlayer.getCards().get(0).getRawRank();
-        }
+        return userPlayer.getCards().get(0).getRawRank() < opponentPlayer.getCards().get(0).getRawRank();
     }
 
     /**
@@ -419,11 +393,7 @@ public class Game {
         int userIndex = userPlayer.threeOfAKindIndex();
         int opponentIndex = opponentPlayer.threeOfAKindIndex();
 
-        if (userPlayer.getCards().get(userIndex).getRawRank() == 1 ) {
-            return false;
-        } else if (opponentPlayer.getCards().get(opponentIndex).getRawRank() == 1 ) {
-            return true;
-        } else if (userPlayer.getCards().get(userIndex).getRawRank()
+        if (userPlayer.getCards().get(userIndex).getRawRank()
                 < opponentPlayer.getCards().get(opponentIndex).getRawRank()) {
             return true;
         } else {
@@ -444,11 +414,7 @@ public class Game {
         int userIndex = userPlayer.twoOfAKindIndex();
         int opponentIndex = opponentPlayer.twoOfAKindIndex();
 
-        if (userPlayer.getCards().get(userIndex).getRawRank() == 1 ) {
-            return false;
-        } else if (opponentPlayer.getCards().get(opponentIndex).getRawRank() == 1 ) {
-            return true;
-        } else if (userPlayer.getCards().get(userIndex).getRawRank()
+        if (userPlayer.getCards().get(userIndex).getRawRank()
                 != opponentPlayer.getCards().get(opponentIndex).getRawRank()) {
             return userPlayer.getCards().get(userIndex).getRawRank()
                     < opponentPlayer.getCards().get(opponentIndex).getRawRank();
@@ -483,11 +449,7 @@ public class Game {
         int userIndex = userPlayer.twoOfAKindIndex();
         int opponentIndex = opponentPlayer.twoOfAKindIndex();
 
-        if (userPlayer.getCards().get(userIndex).getRawRank() == 1 ) {
-            return false;
-        } else if (opponentPlayer.getCards().get(opponentIndex).getRawRank() == 1 ) {
-            return true;
-        } else if (userPlayer.getCards().get(userIndex).getRawRank()
+        if (userPlayer.getCards().get(userIndex).getRawRank()
                 != opponentPlayer.getCards().get(opponentIndex).getRawRank()) {
             return userPlayer.getCards().get(userIndex).getRawRank()
                     < opponentPlayer.getCards().get(opponentIndex).getRawRank();

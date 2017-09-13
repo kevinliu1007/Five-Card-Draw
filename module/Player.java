@@ -58,7 +58,9 @@ public class Player {
      */
     public boolean findAce() {
         for (Card cards : playerCards) {
-            if (cards.getRawRank() == 1) return true;
+            if (cards.getRawRank() == 1 || cards.getRawRank() == 14) {
+                return true;
+            }
         }
 
         return false;
@@ -109,6 +111,8 @@ public class Player {
      * @return value of the hand
      */
     public int evaluateHand() {
+        sortCards();
+
         if (findStraightFlush()) {
             return 0;
         } else if (findFourOfAKind()) {
@@ -149,22 +153,13 @@ public class Player {
      * @return  index of the two of a kind in full house
      */
     public int twoOfAKindIndex() {
-        int count = 1, two = -1;
-
         for (int i = 0; i < 4; ++i) {
             if (playerCards.get(i).getRawRank() == playerCards.get(i+1).getRawRank()) {
-                count++;
-            } else {
-                if (count == 3) {
-                    count = 1;
-                } else if (count == 2) {
-                    two = i - 1;
-                    return two;
-                }
+                return i;
             }
         }
 
-        return two;
+        return -1;
     }
 
     /**
@@ -178,6 +173,9 @@ public class Player {
         for (int i = 0; i < 4; ++i) {
             if (playerCards.get(i).getRawRank() == playerCards.get(i+1).getRawRank()) {
                 count++;
+                if (two != -1) {
+                    return i;
+                }
             } else {
                 if (count == 2) {
                     two = i - 1;
@@ -235,7 +233,6 @@ public class Player {
 
         return -1;
     }
-
 
     /**
      * Sort player hands base on rank of the cards.

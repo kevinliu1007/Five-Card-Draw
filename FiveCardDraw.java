@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class FiveCardDraw {
 
-    
     /**
      * Main method for project 1.
      *
@@ -59,5 +58,7 @@ public class FiveCardDraw {
                 System.out.println(e);
             }
         }
+
+        System.out.println("\nThank you for playing!!!\n");
     }
 }
